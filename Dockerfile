@@ -25,9 +25,6 @@ FROM ubuntu:latest
 # Upgrade installed packages
 RUN apt-get update && apt-get upgrade -y && apt-get clean
 
-# OpenCV environment dependent
-RUN apt-get install -y libsm6 libxext6 libxrender-dev
-
 # Python package management and basic dependencies
 RUN apt-get install -y curl python3.7 python3.7-dev python3.7-distutils
 
@@ -41,6 +38,9 @@ RUN update-alternatives --set python /usr/bin/python3.7
 RUN curl -s https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python get-pip.py --force-reinstall && \
     rm get-pip.py
+
+# OpenCV environment dependent
+RUN apt-get install -y libglib2.0-0 libsm6 libxext6 libxrender-dev
 
 # set as non-interactive
 ENV DEBIAN_FRONTEND noninteractive
@@ -58,7 +58,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 RUN chmod +x /usr/local/bin/dumb-init
 
 # install backend
-RUN pip install scrapy pymongo bs4 requests crawlab-sdk scrapy-splash
+RUN pip install scrapy pymongo bs4 requests crawlab-sdk scrapy-splash -i https://mirrors.aliyun.com/pypi/simple/
 
 # add files
 ADD . /app

@@ -25,6 +25,9 @@ FROM ubuntu:latest
 # Upgrade installed packages
 RUN apt-get update && apt-get upgrade -y && apt-get clean
 
+# OpenCV environment dependent
+RUN apt-get install -y libsm6 libxext6 libxrender-dev
+
 # Python package management and basic dependencies
 RUN apt-get install -y curl python3.7 python3.7-dev python3.7-distutils
 

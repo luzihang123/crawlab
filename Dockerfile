@@ -22,6 +22,23 @@ RUN npm run build:prod
 # images
 FROM ubuntu:latest
 
+# Upgrade installed packages
+RUN apt-get update && apt-get upgrade -y && apt-get clean
+
+# Python package management and basic dependencies
+RUN apt-get install -y curl python3.7 python3.7-dev python3.7-distutils
+
+# Register the version in alternatives
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
+
+# Set python 3 as the default python
+RUN update-alternatives --set python /usr/bin/python3.7
+
+# Upgrade pip to latest version
+RUN curl -s https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    python get-pip.py --force-reinstall && \
+    rm get-pip.py
+
 # set as non-interactive
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -32,8 +49,8 @@ ENV CRAWLAB_IS_DOCKER Y
 RUN chmod 777 /tmp \
 	&& apt-get update \
 	&& apt-get install -y curl git net-tools iputils-ping ntp ntpdate python3 python3-pip nginx wget \
-	&& ln -s /usr/bin/pip3 /usr/local/bin/pip \
-	&& ln -s /usr/bin/python3 /usr/local/bin/python
+	&& ln -s /usr/bin/pip3.7 /usr/local/bin/pip \
+	&& ln -s /usr/bin/python3.7 /usr/local/bin/python
 
 # install dumb-init
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64

@@ -51,7 +51,7 @@ ENV CRAWLAB_IS_DOCKER Y
 # install packages
 RUN chmod 777 /tmp \
 	&& apt-get update \
-	&& apt-get install -y curl git net-tools iputils-ping ntp ntpdate nginx wget
+	&& apt-get install -y curl git net-tools iputils-ping ntp ntpdate nginx wget vim
 
 # install dumb-init
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64

@@ -73,6 +73,7 @@ COPY --from=frontend-build /app/dist /app/dist
 
 # copy nginx config files
 COPY ./nginx/crawlab.conf /etc/nginx/conf.d
+COPY ./nginx/default /etc/nginx/sites-enabled
 
 # working directory
 WORKDIR /app/backend

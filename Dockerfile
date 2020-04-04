@@ -60,6 +60,9 @@ RUN chmod +x /usr/local/bin/dumb-init
 # install backend
 RUN pip install scrapy pymongo bs4 requests crawlab-sdk scrapy-splash -i https://mirrors.aliyun.com/pypi/simple/
 
+# 大陆内切换pip源加速
+RUN pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+
 # add files
 ADD . /app
 
